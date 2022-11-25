@@ -9,6 +9,23 @@
     <!-- <script type="text/javascript">
         var data = {{lst}}
     </script> -->
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #f5f5f5;
+        }
+    </style>
 </head>
 
 <body>
@@ -25,16 +42,36 @@
     </div>
     <div>
         <form>
-            <input type="text" id="myInput" onkeyup="myFunction({{lst}})" placeholder="Search for names.." />
+            <input type="text" id="myInput" onkeyup="myFunction({lst})" placeholder="Search for names.." />
         </form>
     </div>
+    <br/>
     <div>
-        <ul id="myUL">
+        <table id="myTable" style="border: 1px solid;">
+            <tr>
+                <th>File</th>
+                <th>Download</th>
+                <!-- <th>Select</th> -->
+            </tr>
             {% for i in lst.keys() %}
+                <tr>
                 <!-- <li><a href="/dtale/main/{{ lst[i][-1] }}">{{ i }}</a> <a href="https://doi.org/{{ lst[i][-2] }}">{{ Link }}</a></li> -->
-                <li><a href="/dt/{{i}}">{{ i }}</a> <a href="https://doi.org/{{ lst[i][-2] }}">{{ Link }}</a></li>
+                    <td>
+                        <a href="/dt/{{i}}">{{ i }}</a> <a href="https://doi.org/{{ lst[i][-2] }}">{{ Link }}</a>
+                    </td>
+                    <td>
+                        <a href="/data/{{i}}">
+                        <button>
+                            Download
+                        </button>
+                        </a>
+                    </td>
+                    <!-- <td>
+                        <input type="checkbox"></input>
+                    </td> -->
+                </tr>
             {% endfor %}
-        </ul>
+        </table>
     </div>
     <script>
         function myFunction(data) {
@@ -42,7 +79,7 @@
             var input, filter, ul, li, a, i, txtVal;
             input = document.getElementById("myInput");
             filter = input.value.toLowerCase();
-            ul = document.getElementById("myUL");
+            ul = document.getElementById("myTable");
             li = ul.getElementsByTagName("li");
             // console.log()
             // for (i = 0; i < Object.keys(data); i++){
@@ -70,6 +107,10 @@
                     li[i].style.display = "none";
                 }
             }
+        }
+
+        function download_file(filename) {
+            console.log(filename)
         }
     </script>
 </body>

@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, send_from_directory, send_file
 
 from dtale.app import build_app, initialize_process_props
 from dtale.views import startup
@@ -49,5 +49,11 @@ def test():
     instance = startup("", data=df1, hide_shutdown=True)
     return redirect(f"/dtale/main/{instance._data_id}")
 
+@app.route("/data/<filename>")
+def data(filename):
+    print('filename: ', filename)
+    cwd = os.getcwd()
+    return send_from_directory(cwd + '/data', filename)
+
 if __name__ == '__main__':
-    app.run(host=HOST, port=PORT, debug=False)
+    app.run(host=HOST, port=PORT, debug=True)
