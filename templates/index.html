@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDA</title>
+    <!-- <script type="text/javascript">
+        var data = {{lst}}
+    </script> -->
+</head>
+
+<body>
+    <div style="width: 40%; margin: 0px auto;">
+        <h1>Exploratory data analysis</h1>
+    </div>
+    <h3>Choose the Dataset to Explore</h3>
+    <div>
+        <a href="https://federatedhealthplatform.tavlab.iiitd.edu.in/communitydata">
+            <button>
+                Back
+            </button>
+        </a>
+    </div>
+    <div>
+        <form>
+            <input type="text" id="myInput" onkeyup="myFunction({{lst}})" placeholder="Search for names.." />
+        </form>
+    </div>
+    <div>
+        <ul id="myUL">
+            {% for i in lst.keys() %}
+                <!-- <li><a href="/dtale/main/{{ lst[i][-1] }}">{{ i }}</a> <a href="https://doi.org/{{ lst[i][-2] }}">{{ Link }}</a></li> -->
+                <li><a href="/dt/{{i}}">{{ i }}</a> <a href="https://doi.org/{{ lst[i][-2] }}">{{ Link }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script>
+        function myFunction(data) {
+            console.log(data);
+            var input, filter, ul, li, a, i, txtVal;
+            input = document.getElementById("myInput");
+            filter = input.value.toLowerCase();
+            ul = document.getElementById("myUL");
+            li = ul.getElementsByTagName("li");
+            // console.log()
+            // for (i = 0; i < Object.keys(data); i++){
+            //     console.log(data)
+            // }
+            var name = []
+            for (i in data) {
+                // console.log(data[i][0][0])
+                // console.log(data[i][0][0][0])
+                for (var j = 0; j < data[i][0][0].length; j++) {
+                    // console.log(j)
+                    var t = data[i][0][0][j].toLowerCase()
+                    if (t.indexOf(filter) > -1) {
+                        name.push(i)
+                    }
+                }
+            }
+            // console.log(name)
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                txtVal = a.textContent || a.innerText;
+                if (name.includes(txtVal)) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
