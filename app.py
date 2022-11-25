@@ -51,9 +51,8 @@ def test():
 
 @app.route("/data/<filename>")
 def data(filename):
-    print('filename: ', filename)
     cwd = os.getcwd()
     return send_from_directory(cwd + '/data', filename)
 
 if __name__ == '__main__':
-    app.run(host=HOST, port=PORT, debug=True)
+    app.run(host=HOST, port=PORT, debug=False)
